@@ -1,14 +1,6 @@
 #ifndef HANDLERS_H
 #define HANDLERS_H
-#include "html_element.h"
 #include <algorithm>
-#include <boost/asio/dispatch.hpp>
-#include <boost/asio/strand.hpp>
-#include <boost/beast/core.hpp>
-#include <boost/beast/http.hpp>
-#include <boost/beast/version.hpp>
-#include <boost/config.hpp>
-#include <boost/log/trivial.hpp>
 #include <cstdlib>
 #include <filesystem>
 #include <functional>
@@ -18,11 +10,24 @@
 #include <sstream>
 #include <string>
 #include <thread>
+#include <utility>
 #include <vector>
+
+#include <boost/asio/dispatch.hpp>
+#include <boost/asio/strand.hpp>
+#include <boost/beast/core.hpp>
+#include <boost/beast/http.hpp>
+#include <boost/beast/version.hpp>
+#include <boost/config.hpp>
+#include <boost/log/trivial.hpp>
+
+#include "./html_element.h"
+#include "./urldecode.h"
+
 using std::string;
 using std::vector;
 
-static const unsigned int POW_2_10 = 2 << 10;
+static const unsigned int POW_2_10 = 1 << 10;
 
 namespace fs = std::filesystem;
 namespace beast = boost::beast;   // from <boost/beast.hpp>
@@ -101,7 +106,11 @@ void handle_request(beast::string_view doc_root,
     return send(bad_request("Illegal request-target"));
 
   // Build the path to the requested file
-  std::string path = path_cat(doc_root, req.target());
+  std::string encoded_path = path_cat(doc_root, req.target());
+  std::string path;
+  if (!url_decode(encoded_path, path)) {
+    return send(bad_request("invalid path string encoding"));
+  }
 
   if (is_directory(path)) {
     std::cout << "this is a directory!" << std::endl;

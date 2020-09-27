@@ -56,12 +56,12 @@ public:
   text_element(const std::string &t = ""); // template <bool istext>
 };
 
-typedef std::vector<std::shared_ptr<abstract_dom_element>> children_vector;
+typedef std::vector<abstract_dom_element *> children_vector;
 
 struct html_element : public dom_element<false, html_element> //  friend class
 
 {
-  using children_vector = std::vector<std::shared_ptr<abstract_dom_element>>;
+  using children_vector = std::vector<abstract_dom_element *>;
   using attr_map = std::map<std::string, std::string>;
   std::string tagname_;
   attr_map attributes_;

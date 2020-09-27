@@ -1,4 +1,5 @@
 #include "session.h"
+#include <utility>
 
 session::session(tcp::socket &&socket,
                  const std::shared_ptr<const std::string> &doc_root)
@@ -39,7 +40,8 @@ void session::on_read(beast::error_code ec, std::size_t bytes_transferred) {
     return fail(ec, "read");
 
   // Send the response
-  BOOST_LOG_TRIVIAL(info) << "handling request" << req_;
+  //  BOOST_LOG_TRIVIAL(info) << "handling request" << req_;
+  BOOST_LOG_TRIVIAL(info) << req_.method_string() << " " << req_.target();
   handle_request(*doc_root_, std::move(req_), lambda_);
 }
 

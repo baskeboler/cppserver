@@ -13,19 +13,7 @@
 //
 //------------------------------------------------------------------------------
 
-#include "handlers.h"
-#include "html_element.h"
-#include "listener.h"
-#include "session.h"
 #include <algorithm>
-#include <boost/asio/dispatch.hpp>
-#include <boost/asio/strand.hpp>
-#include <boost/beast/core.hpp>
-#include <boost/beast/http.hpp>
-#include <boost/beast/version.hpp>
-#include <boost/config.hpp>
-#include <boost/log/trivial.hpp>
-#include <catch2/catch.hpp>
 #include <cstdlib>
 #include <functional>
 #include <iostream>
@@ -35,6 +23,19 @@
 #include <thread>
 #include <vector>
 
+#include <boost/asio/dispatch.hpp>
+#include <boost/asio/strand.hpp>
+#include <boost/beast/core.hpp>
+#include <boost/beast/http.hpp>
+#include <boost/beast/version.hpp>
+#include <boost/config.hpp>
+#include <boost/log/trivial.hpp>
+#include <catch2/catch.hpp>
+
+#include "./handlers.h"
+#include "./html_element.h"
+#include "./listener.h"
+#include "./session.h"
 namespace beast = boost::beast;   // from <boost/beast.hpp>
 namespace http = beast::http;     // from <boost/beast/http.hpp>
 namespace net = boost::asio;      // from <boost/asio.hpp>
@@ -48,11 +49,11 @@ int main(int argc, char *argv[]) {
   using std::make_shared;
   using std::map;
   using std::string;
-  html_element el{"div",
-                  {{"atra", "val"}},
-                  {make_shared<text_element>("some text"),
-                   make_shared<html_element>(
-                       "span", map<string, string>{{"value", "pepe"}})}};
+  html_element el{
+      "div",
+      {{"atra", "val"}},
+      {new text_element("some text"),
+       new html_element("span", map<string, string>{{"value", "pepe"}})}};
   std::cout << el << std::endl;
   // Check command line arguments.
   if (argc != 5) {
@@ -63,7 +64,7 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
   auto const address = net::ip::make_address(argv[1]);
-  auto const port = static_cast<unsigned short>(std::atoi(argv[2]));
+  auto const port = static_cast<uint16_t>(std::atoi(argv[2]));
   auto const doc_root = std::make_shared<std::string>(argv[3]);
   auto const threads = std::max<int>(1, std::atoi(argv[4]));
 

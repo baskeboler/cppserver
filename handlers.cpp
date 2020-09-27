@@ -122,22 +122,19 @@ bool is_directory(string path) { return fs::is_directory(path); }
 
 html_element build_link(const string &label, const string &href) {
 
-  return html_element{
-      "a", {{"href", href}}, {std::make_shared<text_element>(label)}};
+  return html_element{"a", {{"href", href}}, {new text_element{label}}};
 }
 
 html_element list_item_wrap(html_element &el) {
-  return html_element{
-      "li", {}, {std::shared_ptr<html_element>(new html_element{el})}};
+  return html_element{"li", {}, {new html_element{el}}};
 }
 
 html_element list_item_wrap(text_element &el) {
-  return html_element{"li", {}, {el.get_shared()}};
+  return html_element{"li", {}, {&el}};
 }
 
 html_element element_wrap(const string &tagname, html_element &el) {
-  return html_element{
-      tagname, {}, {std::shared_ptr<html_element>(new html_element{el})}};
+  return html_element{tagname, {}, {new html_element{el}}};
 }
 
 string relativepath(const string &base, const string &path) {

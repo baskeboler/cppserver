@@ -29,11 +29,13 @@ INCLUDE_DIRECTORIES (${Catch2_INCLUDE_DIRS})
 set(beastserver_SRC session.cpp 
     handlers.cpp 
     listener.cpp 
+    urldecode.cpp
     html_element.cpp)
 set(beastserver_HEADERS 
     session.h 
     handlers.h 
     listener.h
+    urldecode.h
     html_element.h)
 add_library(beaststuff  ${beastserver_SRC} ${beastserver_HEADERS})
 
