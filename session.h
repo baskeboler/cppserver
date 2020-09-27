@@ -1,5 +1,6 @@
 #ifndef SESSION_H
 #define SESSION_H
+#include "handlers.h"
 #include <algorithm>
 #include <boost/asio/dispatch.hpp>
 #include <boost/asio/strand.hpp>
@@ -7,8 +8,6 @@
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
 #include <boost/config.hpp>
-//#include <boost/log/trivial.hpp>
-#include "handlers.h"
 #include <cstdlib>
 #include <functional>
 #include <iostream>

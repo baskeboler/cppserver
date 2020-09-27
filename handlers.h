@@ -22,6 +22,8 @@
 using std::string;
 using std::vector;
 
+static const unsigned int POW_2_10 = 2 << 10;
+
 namespace fs = std::filesystem;
 namespace beast = boost::beast;   // from <boost/beast.hpp>
 namespace http = beast::http;     // from <boost/beast/http.hpp>
@@ -30,12 +32,12 @@ using tcp = boost::asio::ip::tcp; // from <boost/asio/ip/tcp.hpp>
 
 extern html_element list_item_wrap(html_element &el);
 extern html_element list_item_wrap(text_element &el);
-
+extern string relativepath(const string &base, const string &path);
 html_element element_wrap(const std::string &tagname, html_element &el);
 extern string html_document_wrap(const string &title,
                                  const string &html_content);
 html_element dir_table(const std::string &path);
-std::string dir_table2(const std::string &path);
+std::string dir_table2(const string &server_root, const string &path);
 // Return a reasonable mime type based on the extension of a file.
 beast::string_view mime_type(beast::string_view path);
 
@@ -109,8 +111,8 @@ void handle_request(beast::string_view doc_root,
     res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
     res.set(http::field::content_type, mime_type("path.html"));
     res.keep_alive(req.keep_alive());
-    res.body() =
-        html_document_wrap(path + " directory listing", dir_table2(path));
+    res.body() = html_document_wrap(path + " directory listing",
+                                    dir_table2(doc_root.to_string(), path));
     res.prepare_payload();
     return send(std::move(res));
   }
