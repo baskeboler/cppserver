@@ -62,7 +62,7 @@ class session : public std::enable_shared_from_this<session> {
 public:
   // Take ownership of the stream
   session(tcp::socket &&socket,
-          std::shared_ptr<std::string const> const &doc_root);
+          const std::shared_ptr<std::string const> &doc_root);
 
   // Start the asynchronous operation
   void run();
