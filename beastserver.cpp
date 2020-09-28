@@ -23,9 +23,12 @@
 #include <thread>
 #include <vector>
 
+#include <boost/asio.hpp>
+#include <boost/beast.hpp>
 #include <boost/log/trivial.hpp>
 
 #include "./server.h"
+
 namespace beast = boost::beast;   // from <boost/beast.hpp>
 namespace http = beast::http;     // from <boost/beast/http.hpp>
 namespace net = boost::asio;      // from <boost/asio.hpp>
