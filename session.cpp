@@ -1,6 +1,11 @@
 #include "session.h"
 #include <utility>
 
+namespace beast = boost::beast;   // from <boost/beast.hpp>
+namespace http = beast::http;     // from <boost/beast/http.hpp>
+namespace net = boost::asio;      // from <boost/asio.hpp>
+using tcp = boost::asio::ip::tcp; // from <boost/asio/ip/tcp.hpp>
+
 session::session(tcp::socket &&socket,
                  const std::shared_ptr<const std::string> &doc_root)
     : stream_(std::move(socket)), doc_root_(doc_root), lambda_(*this) {}

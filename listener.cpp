@@ -4,6 +4,11 @@
 
 #include <boost/asio/strand.hpp>
 
+namespace beast = boost::beast;   // from <boost/beast.hpp>
+namespace http = beast::http;     // from <boost/beast/http.hpp>
+namespace net = boost::asio;      // from <boost/asio.hpp>
+using tcp = boost::asio::ip::tcp; // from <boost/asio/ip/tcp.hpp>
+
 listener::listener(std::shared_ptr<boost::asio::io_context> ioc,
                    tcp::endpoint endpoint,
                    const std::shared_ptr<const std::string> &doc_root)
