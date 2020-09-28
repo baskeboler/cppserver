@@ -8,6 +8,8 @@
 #include <boost/asio.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/beast.hpp>
+#include <boost/beast/core/bind_handler.hpp>
+
 #include <boost/log/trivial.hpp>
 
 namespace beast = boost::beast;   // from <boost/beast.hpp>
