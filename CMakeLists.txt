@@ -30,9 +30,11 @@ set(beastserver_SRC session.cpp
     handlers.cpp 
     listener.cpp 
     urldecode.cpp
+    server.cpp
     html_element.cpp)
 set(beastserver_HEADERS 
-    session.h 
+    session.h
+    server.h
     handlers.h 
     listener.h
     urldecode.h

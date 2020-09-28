@@ -1,9 +1,13 @@
 #include "listener.h"
+
 #include <utility>
 
-listener::listener(boost::asio::io_context &ioc, tcp::endpoint endpoint,
+#include <boost/asio/strand.hpp>
+
+listener::listener(std::shared_ptr<boost::asio::io_context> ioc,
+                   tcp::endpoint endpoint,
                    const std::shared_ptr<const std::string> &doc_root)
-    : ioc_(ioc), acceptor_(net::make_strand(ioc)), doc_root_(doc_root) {
+    : ioc_(ioc), acceptor_(net::make_strand(*ioc)), doc_root_(doc_root) {
   beast::error_code ec;
 
   // Open the acceptor
@@ -40,7 +44,7 @@ void listener::run() { do_accept(); }
 void listener::do_accept() {
   // The new connection gets its own strand
   acceptor_.async_accept(
-      net::make_strand(ioc_),
+      net::make_strand(*ioc_),
       beast::bind_front_handler(&listener::on_accept, shared_from_this()));
 }
 

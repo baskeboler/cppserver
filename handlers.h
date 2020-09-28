@@ -113,7 +113,7 @@ void handle_request(beast::string_view doc_root,
   }
 
   if (is_directory(path)) {
-    std::cout << "this is a directory!" << std::endl;
+    //    std::cout << "this is a directory!" << std::endl;
     using std::make_shared;
     http::string_body::value_type body;
     http::response<http::string_body> res{http::status::ok, req.version()};
