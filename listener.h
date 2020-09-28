@@ -1,8 +1,6 @@
 #ifndef LISTENER_H
 #define LISTENER_H
 
-#include <algorithm>
-#include <cstdlib>
 #include <functional>
 #include <iostream>
 #include <memory>
@@ -19,8 +17,8 @@
 #include <boost/beast.hpp>
 #include <boost/config.hpp>
 //#include <boost/log/trivial.hpp>
-#include "handlers.h"
-#include "session.h"
+//#include "handlers.h"
+//#include "session.h"
 
 namespace beast = boost::beast;   // from <boost/beast.hpp>
 namespace http = beast::http;     // from <boost/beast/http.hpp>
