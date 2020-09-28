@@ -5,6 +5,7 @@
 #include <string>
 
 #include <boost/asio/dispatch.hpp>
+#include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/strand.hpp>
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
